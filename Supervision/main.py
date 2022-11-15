@@ -5,12 +5,8 @@ from commandeClass import *
 def main():
     # creating the socket
     s = SocketClass()
-    # creating the commands
-    CommandeClass.CPU(s)
-    CommandeClass.IP(s)
-    CommandeClass.HOST(s)
-    CommandeClass.OS(s)
-    CommandeClass.RAM(s)
+    # connection to the server
+    s.connexion("192.168.0.50")
 
 if __name__ == '__main__':
     main()

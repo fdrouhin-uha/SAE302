@@ -1,4 +1,3 @@
-from socket import *
 import os
 import sys
 import platform

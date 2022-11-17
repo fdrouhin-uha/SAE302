@@ -1,11 +1,19 @@
 # GUI's class 
 
-from PySide6.QtCore import (Qt, QEvent, QObject, QTimer, Signal, Slot)
-from PySide6.QtGui import (QColor, QFont, QPalette)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QMainWindow, QVBoxLayout, QWidget)
+from PyQt6.QtWidgets import (QApplication,QHBoxLayout,QPushButton,QWidget,)
 
 from commandeClass import *
 from socketClass import *
 
-class Gui(QMainWindow):
-    pass
+class Gui():
+    app = QApplication([])
+    window = QWidget()
+    window.setWindowTitle("Supervision")
+    layout = QHBoxLayout()
+    layout.addWidget(QPushButton("Left"))
+    layout.addWidget(QPushButton("Center"))
+    layout.addWidget(QPushButton("Right"))
+    window.setLayout(layout)
+    window.show()
+
+    sys.exit(app.exec())

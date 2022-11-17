@@ -11,6 +11,9 @@ class SocketClass():
     def accept(self):
         self.s, self.addr = self.s.accept()
         print(f"Connection à {self.addr} établie")
+
+    def listen(self):
+        self.s.listen(5)
     
     def send(self, data):
         self.s.send(data)

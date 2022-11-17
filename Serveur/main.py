@@ -6,12 +6,13 @@ import time
 
 def main():
     # creating the socket
-    s = SocketClass()
+    # s = SocketClass()
     # threading the socket
-    start = time.perf_counter()
-    t1 = threading.Thread(target=s.accept)
-    end = time.perf_counter()   
-    print(f"Finished in {round(end-start, 2)} second(s)")
+    # start = time.perf_counter()
+    # t1 = threading.Thread(target=s.accept)
+    # end = time.perf_counter()   
+    # print(f"Finished in {round(end-start, 2)} second(s)")
+    pass
 
 if __name__ == '__main__':
     main()

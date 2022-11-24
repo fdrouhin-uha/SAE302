@@ -1,0 +1,58 @@
+import socket
+
+
+class Serveur():
+    def __init__(self):
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.s.setblocking(0)
+        self.s.bind((socket.gethostname(), 10000))
+        self.s.listen(5)
+        print("Server is listening...")
+        clientconnected = False
+        print ("Waiting for client...")
+
+    def execute(self):
+        while True:
+            try:
+                self.conn, self.addr = self.s.accept()
+                print(f"Connection à {self.addr} établie")
+                clientconnected = True
+                break
+            except BlockingIOError:
+                pass
+        if clientconnected:
+            while True:
+                try:
+                    self.data = self.conn.recv(1024)
+                    print(self.data)
+                    print("Data reçue")
+                    break
+                except BlockingIOError:
+                    pass
+        self.conn.close()
+        print("Connection fermée")
+    # # Wait for a client to connect
+    # while clientconnected == False:
+    #     client, address = server.accept()
+    #     print(f"Client connecté {address}")
+    #     clientconnected = True
+    #     client.send ("Connecté".encode())
+
+    # # Receive data from the client when client connected
+    # while clientconnected == True:
+    #     data = client.recv(1024).decode()
+    #     print(f"Client {address}, donnée {data}")
+    #     if data == "exit": # Close the connection when client send "exit" message
+    #         server.close()
+    #         print (f"Serveur fermé par {address}")
+    #         break
+    #     elif data == "close":  # Close the client connection but not the server if client send "close"
+    #         print("Client déconnecté")
+    #         client.close()
+    #         clientconnected = False 
+    #         print ("En attente du client...")
+    #         while clientconnected == False: # Wait for a new client to connect
+    #             client, address = server.accept()
+    #             print(f"Client {address} connecté")
+    #             clientconnected = True
+    #             client.send ("Connecté".encode())

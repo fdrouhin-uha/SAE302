@@ -1,15 +1,12 @@
 # exec
 from socketClass import *
 from commandeClass import *
+from classtest import *
 from gui import *
 
 def main():
-    # creating the socket
-    s = SocketClass()
-    # connection to the server
-    s.connexion("192.168.0.50")
-
-    Gui()
+    client = Supervision()
+    client.execute()
 
 if __name__ == '__main__':
     main()

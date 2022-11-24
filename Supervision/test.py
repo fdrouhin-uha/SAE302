@@ -1,53 +1,22 @@
-import sys
+import socket, sys 
 
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import (QWidget, QHBoxLayout, QFrame,
-        QSplitter, QApplication)
+HOST = 'localhost'
+PORT = 10002
 
+socketClient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-class Example(QWidget):
+try:
+    socketClient.connect((HOST, PORT))
+except socket.error:
+    print("La connexion a échoué.")
+    sys.exit()
+print("Connexion établie avec le serveur.")
 
-    def __init__(self):
-        super().__init__()
+while True:
+    messageServeur = socketClient.recv(1024)
+    print("S>", messageServeur)
+    messageClient = input("C> ")
+    socketClient.send(messageClient)
 
-        self.initUI()
-
-
-    def initUI(self):
-
-        hbox = QHBoxLayout(self)
-
-        topleft = QFrame(self)
-        topleft.setFrameShape(QFrame.Shape.StyledPanel)
-
-        topright = QFrame(self)
-        topright.setFrameShape(QFrame.Shape.StyledPanel)
-
-        bottom = QFrame(self)
-        bottom.setFrameShape(QFrame.Shape.StyledPanel)
-
-        splitter1 = QSplitter(Qt.Orientation.Horizontal)
-        splitter1.addWidget(topleft)
-        splitter1.addWidget(topright)
-
-        splitter2 = QSplitter(Qt.Orientation.Vertical)
-        splitter2.addWidget(splitter1)
-        splitter2.addWidget(bottom)
-
-        hbox.addWidget(splitter2)
-        self.setLayout(hbox)
-
-        self.setGeometry(300, 300, 450, 400)
-        self.setWindowTitle('QSplitter')
-        self.show()
-
-
-def main():
-
-    app = QApplication(sys.argv)
-    ex = Example()
-    sys.exit(app.exec())
-
-
-if __name__ == '__main__':
-    main()
+print("Connexion interrompue.")
+socketClient.close()

@@ -3,8 +3,8 @@ import os
 import platform
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(('localhost', 10002))
-server.listen(1)
+server.bind(('localhost', 10000))
+server.listen(5)
 print("S: Server is listening...")
 clientconnected = False
 print("S: Waiting for client...")
@@ -64,7 +64,7 @@ while clientconnected == True:
             if platform.system() == "Windows":
                 client.send(os.popen("wmic memorychip get capacity").read().encode("utf-8"))
             if platform.system() == "Linux":
-                client.send(os.popen("cat /proc/meminfo").read().encode("utf-8"))
+                client.sendall(os.popen("cat /proc/meminfo").read().encode("utf-8"))
             if platform.system() == "Mac":
                 client.send(os.popen("sysctl hw.memsize").read().encode("utf-8"))
             else:
@@ -73,11 +73,18 @@ while clientconnected == True:
             if platform.system() == "Windows":
                 client.send(os.popen("wmic cpu get name").read().encode("utf-8"))
             if platform.system() == "Linux":
-                client.send(os.popen("cat /proc/cpuinfo").read().encode("utf-8"))
+                client.sendall(os.popen("cat /proc/cpuinfo").read().encode("utf-8"))
             if platform.system() == "Mac":
                 client.send(os.popen("sysctl -n machdep.cpu.brand_string").read().encode("utf-8"))
             else:
                 print("S: OS non supporté")
+        if data != "exit" or data != "disconnect" or data != "kill" or data != "reset" or data != "os" or data != "ip" or data != "hostname" or data != "ram" or data != "cpu": 
+            client.send("S: Message non reconnue".encode("utf-8"))
+        if data == "":
+            client.send("S: Message vide".encode("utf-8"))
+    except BrokenPipeError:
+        print("S: Client déconnecté")
+        break
     except:            
         client.send("S: Commande non reconnue".encode("utf-8"))
 

@@ -1,0 +1,16 @@
+2022-11-24 11:04:19,950,ip,S: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:04:20,766,p,127.0.1.1S: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:04:22,193,r,S: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:04:22,534,t,S: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:04:23,093,e,S: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:04:23,597,e,S: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:04:24,325,os,S: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:04:26,565,linux,LinuxS: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:05:20,543,ip,S: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:05:21,854,p,127.0.1.1S: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:06:05,500,os,S: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:06:07,529,bite,LinuxS: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:06:11,100,hostname,S: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:06:13,220,filsdepute,louis-ubuntuS: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:06:18,491,os,S: Message non reconnue,127.0.0.1,10002
+2022-11-24 11:06:18,918,os,LinuxS: Message non reconnue,127.0.0.1,10002

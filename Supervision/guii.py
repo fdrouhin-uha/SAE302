@@ -41,6 +41,8 @@ class MainWindow(QMainWindow):
         grid.addWidget(self.statusConnection, 2, 1, 1, 3)
         grid.addWidget(boutonDeconnection, 1, 2, 1, 2)
 
+        # t1 = threading.Thread(target=self.__actionConnect).start()
+        # boutonConnect.clicked.connect(t1)
         boutonConnect.clicked.connect(self.__actionConnect)
         boutonDeconnection.clicked.connect(self.__actionDeconnect)
 
@@ -74,13 +76,13 @@ class MainWindow(QMainWindow):
             self.valeurConnection = "Valeur invalide (port ou adresse IP incorrect)"
             self.statusConnection.setText(f"{self.valeurConnection}")
             print("Valeur invalide (port ou adresse IP incorrect)")
-        except OSError:
-            self.valeurConnection = "Impossible de se connecter (OSErr)"
-            self.statusConnection.setText(f"{self.valeurConnection}")
-            print("OSError")
-
+        # except OSError:
+        #     self.valeurConnection = "Impossible de se connecter (OSErr)"
+        #     self.statusConnection.setText(f"{self.valeurConnection}")
+        #     print("OSError")
 
     def __actionDeconnect(self):
+        self.client.send("disconnect".encode("utf-8"))
         self.client.close()
         self.valeurConnection = "Déconnecté"
         self.statusConnection.setText(f"{self.valeurConnection}")
@@ -140,6 +142,7 @@ class Shell(QMainWindow):
         boutonSend.clicked.connect(self.__actionSend)
         boutonOS.clicked.connect(self.__actionOS)
         boutonCPU.clicked.connect(self.__actionCPU)
+        boutonHOST.clicked.connect(self.__actionHOST)
         boutonShutdonw.clicked.connect(self.__actionShutdown)
         boutonReboot.clicked.connect(self.__actionReboot)
 
@@ -166,6 +169,12 @@ class Shell(QMainWindow):
         self.resultatCommande = self.client.recv(1024).decode('utf-8')
         self.retourShell.setText(f"{self.resultatCommande}")
         print(self.resultatCommande)
+
+    def __actionHOST(self):
+        self.client.send('hostname'.encode('utf-8'))
+        self.resultatCommande = self.client.recv(1024).decode('utf-8')
+        self.retourShell.setText(f"{self.resultatCommande}")
+        print(self.resultatCommande)
         
     def __actionShutdown(self):
         self.client.send('kill'.encode('utf-8'))
@@ -180,9 +189,8 @@ class Shell(QMainWindow):
         print(self.resultatCommande)
 
     def __actionExit(self):
-        # close the window
+        self.client.close()
         self.close()
-        sys.exit()  
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

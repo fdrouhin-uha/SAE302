@@ -1,4 +1,4 @@
 sockets==1.0.0
 lib-platform==1.2.7
-psutil==5.9.4
-py-cpuinfo==9.0.0
+PyQt5==5.15.6
+PyQt5-sip==12.9.1

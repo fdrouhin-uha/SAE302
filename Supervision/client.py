@@ -7,7 +7,6 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
-# Application de conversion de temperature
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -48,6 +47,7 @@ class MainWindow(QMainWindow):
 
     def __actionConnect(self):
         try:
+            #threading.Thread(target=self.__actionConnect).start()
             self.HOST = str(self.textConnect.text())
             self.PORT = int(self.textPort.text())
             self.client.connect((self.HOST, self.PORT))
@@ -87,6 +87,7 @@ class MainWindow(QMainWindow):
         self.valeurConnection = "Déconnecté"
         self.statusConnection.setText(f"{self.valeurConnection}")
         print("Déconnecté")
+        sys.exit(threading.Thread(target=self.__actionConnect))
 
     def getHOST(self):
         return self.HOST
@@ -147,7 +148,7 @@ class Shell(QMainWindow):
         boutonReboot.clicked.connect(self.__actionReboot)
 
     def __actionSend(self):
-        message = self.inputShell.text()
+        message = platform.system().lower()+':'+self.inputShell.text().lower()
         self.client.send(message.encode())
         self.resultatCommande = self.client.recv(1024).decode()
         self.retourShell.setText(f"{self.resultatCommande}")
@@ -189,6 +190,7 @@ class Shell(QMainWindow):
         print(self.resultatCommande)
 
     def __actionExit(self):
+        self.client.send('exit'.encode('utf-8'))
         self.client.close()
         self.close()
 

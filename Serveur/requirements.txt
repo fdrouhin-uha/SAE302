@@ -1,0 +1,4 @@
+socket
+platform
+threading
+PyQt5

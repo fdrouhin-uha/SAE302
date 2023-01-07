@@ -63,7 +63,7 @@ def handle_client(client):
                         os.system("shutdown -h now")
                     else:
                         print("S: OS non supporté")
-                if data == "reset":
+                if data == "reset": # la commande reset ne permet pas de rédémarré le système !
                     if platform.system() == "Windows":
                         os.system("shutdown /r /t 1")
                     if platform.system() == "Linux":
@@ -83,22 +83,27 @@ def handle_client(client):
                         ramTotal = psutil.virtual_memory().total/1000000000
                         ramUsage = psutil.virtual_memory()[3]/1000000000
                         client.send(str(f"Ram disponible : {ramTotal} Go \nRam utilisée : {ramUsage} Go").encode("utf-8"))
-                    if platform.system() == "Linux":
+                    elif platform.system() == "Linux":
                         ramTotal = psutil.virtual_memory().total/1000000000
                         ramUsage = psutil.virtual_memory()[3]/1000000000
                         client.send(str(f"Ram disponible : {ramTotal} Go \nRam utilisée : {ramUsage} Go").encode("utf-8"))
-                    if platform.system() == "Mac":
+                    elif platform.system() == "Mac":
                         ramTotal = psutil.virtual_memory().total/1000000000
                         # get ram usage in bytes
                         ramUsage = psutil.virtual_memory()[3]/1000000000
                         client.send(str(f"Ram disponible : {ramTotal} Go \nRam utilisée : {ramUsage} Go").encode("utf-8"))
+                    else: # toujours renvoyé un message car sur mon système je me retrouvais bloqué
+                       client.send(str(f"Système non supporté").encode("utf-8"))
+                     
                 if data == "cpu":
                     if platform.system() == "Windows" or platform.system() == "NT":
                         client.send(os.popen("wmic cpu get name").read().encode("utf-8"))
-                    if platform.system() == "Linux":
+                    elif platform.system() == "Linux": # if elif else est une notion important en programmation
                         client.send(cpuinfo.get_cpu_info()["brand_raw"].encode("utf-8"))
-                    if platform.system() == "Mac":
+                    elif platform.system() == "Mac": 
                         client.send(os.popen("sysctl -n machdep.cpu.brand_string").read().encode("utf-8"))
+                    else: # toujours renvoyé un message car sur mon système je me retrouvais bloqué
+                       client.send(str(f"Système non supporté").encode("utf-8"))
                 if data == "exit":
                     client.close()
                     print("S: Client déconnecté")
